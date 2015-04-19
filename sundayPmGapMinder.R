@@ -65,3 +65,47 @@ library ("tidyr")
 # it to a long data set.
 iris.long <-gather(iris, "Measurement", "Value", 1:4)
 
+# Begin Final Project 
+# The countries we are going to look at are China, Canada and Cuba
+
+# Section 1  Make three scatter plots, 
+#  one for each country that have year on the x-axis and GDP on the y Axis.  
+#  Make sure you load all the libraries you might need.
+#  Describe what you see in the results using markdown text.
+
+#  Load libraries
+library ("dplyr")
+
+#  Load Data from the file
+
+gap.in <- read.table("output/combined_gapMinder.tsv", 
+                     sep = "\t", 
+                     header = TRUE)
+
+#  China, Canada, Cuba Let's make a dataset for each with the year and GDP
+
+gap.in %>%
+  filter(country=="China") %>%
+  select(year, gdpPercap) -> China
+
+gap.in %>%
+  filter(country=="Canada") %>%
+  select(year, gdpPercap) -> Canada
+
+gap.in %>%
+  filter(country=="Cuba") %>%
+  select(year, gdpPercap) -> Cuba
+
+# Now that we have the data wrangled, let's do 3 scatter plots for each item
+
+plot(China$year, China$gdpPercap, xlab="Year",ylab="GDP", 
+       main="China GDP per Year", 
+       col="green", lwd=2, type="p")
+
+plot(Canada$year, Canada$gdpPercap, xlab="Year",ylab="GDP", 
+     main="Canada GDP per Year", 
+     col="green", lwd=2, type="p")
+
+plot(Cuba$year, Cuba$gdpPercap, xlab="Year",ylab="GDP", 
+     main="Cuba GDP per Year", 
+     col="green", lwd=2, type="p")
