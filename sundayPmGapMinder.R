@@ -3,6 +3,14 @@
 # matt.dorrance@gmail.com
 # April 19, 2015
 
+# Installing needed Packages and dependencies
+install.packages("dplyr", dependencies = TRUE)
+
+# Loading any non-standard required packages
+library("dplyr")
+
+# Main Body of Code
+
 #Read in data as tab-delimted
 gap.in <- read.table("output/combined_gapMinder.tsv", 
                      sep = "\t", 
@@ -22,4 +30,5 @@ add.me <- function(arg1,arg2){
 }
 
 add.me(17, 12)
+
 
