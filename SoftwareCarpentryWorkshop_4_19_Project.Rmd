@@ -1,0 +1,96 @@
+---
+title: "Software Carpentry Workshop"
+author: "Matt Dorrance"
+date: "Sunday, April 19, 2015"
+output: html_document
+---
+
+This is the final project for the UT Arlington Software Carpentry workshop on 4/19/2015.
+
+First, we are looking at the gapMinder data for three countries, China, Canada, and Cuba.
+
+```{r, include=FALSE}
+#  Load libraries
+library ("dplyr", verbose=FALSE)
+
+#  Load Data from the file
+
+gap.in <- read.table("output/combined_gapMinder.tsv", 
+                     sep = "\t", 
+                     header = TRUE)
+
+#  China, Canada, Cuba Let's make a dataset for each with the year and GDP
+
+gap.in %>%
+  filter(country=="China") %>%
+  select(year, gdpPercap) -> China
+
+gap.in %>%
+  filter(country=="Canada") %>%
+  select(year, gdpPercap) -> Canada
+
+gap.in %>%
+  filter(country=="Cuba") %>%
+  select(year, gdpPercap) -> Cuba
+```
+
+As you can see for China, the GDP has grown on an annual basis:
+
+```{r, echo=FALSE}
+plot(China$year, China$gdpPercap, xlab="Year",ylab="GDP", 
+       main="China GDP per Year", 
+       col="red", lwd=2, type="p")
+```
+
+Likewise, for Canada, the GDP has grown on an annual basis:
+
+```{r, echo=FALSE}
+plot(Canada$year, Canada$gdpPercap, xlab="Year",ylab="GDP", 
+       main="Canada GDP per Year", 
+       col="blue", lwd=2, type="p")
+```
+
+However, for Cuba, the GDP has varied wildly.  One can attribute this to political changes and trade sanctions from the US and other nations in the UN.
+
+```{r, echo=FALSE}
+plot(Cuba$year, Cuba$gdpPercap, xlab="Year",ylab="GDP", 
+       main="Cuba GDP per Year", 
+       col="green", lwd=2, type="p")
+```
+
+
+In this section, we will look at the mean, min, and max life expectancies for each continent
+
+As you can see, the smallest population, Africa, has a sizable large and mean population.  The smallest and largest populations in Asia have a very noticable difference. 
+
+```{r, echo=FALSE}
+gap.in %>%
+  select(continent, year, pop) %>%
+  group_by(continent) %>%
+  summarize(mean = mean(pop), min = min(pop), max = max(pop))
+```  
+
+
+Now we'll look at some histograms of global life expectancy.
+
+```{r, echo=FALSE}
+
+plot (gap.in$lifeExp, type="h", main="Live Expectancy", xlab="Life Expectancy",ylab="Age in Years")
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
